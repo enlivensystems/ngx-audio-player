@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import {Component, OnInit, Input, ViewChild, Output, EventEmitter} from '@angular/core';
 import { AudioPlayerService } from '../../service/audio-player-service/audio-player.service';
 import { Track } from '../../model/track.model';
 import { BaseAudioPlayerFunctions } from '../base/base-audio-player-components';
@@ -13,7 +13,7 @@ import { MatPaginator } from '@angular/material/paginator';
 })
 export class MatAdvancedAudioPlayerComponent extends BaseAudioPlayerFunctions implements OnInit {
 
-    displayedColumns: string[] = ['title', 'status'];
+    displayedColumns: string[] = ['title', 'status', 'functions'];
     timeLineDuration: MatSlider;
 
     dataSource = new MatTableDataSource<Track>();
@@ -40,6 +40,38 @@ export class MatAdvancedAudioPlayerComponent extends BaseAudioPlayerFunctions im
     @Input()
     displayVolumeControls = true;
 
+    @Input()
+    audioLoadingErrorText = 'Failed to load: ';
+    @Input()
+    audioLoadingInProgressText = 'Please wait while the audio is loading: ';
+
+    @Input()
+    clearPlaylistText = 'Clear playlist';
+
+    @Input()
+    errorColor = '#D65251';
+    @Input()
+    errorText = 'Failed to load the song, click here to try again!';
+
+    @Input()
+    removePlaylistElementEnabled = false;
+
+    @Input()
+    removePlaylistElementText = 'Remove';
+
+    @Input()
+    playlistTitleText = 'Play List';
+
+    @Output()
+    clearPlaylist: EventEmitter<void> = new EventEmitter();
+
+    @Output()
+    removePlaylistElementByID: EventEmitter<string> = new EventEmitter();
+
+    @Output()
+    playerLoadError: EventEmitter<any> = new EventEmitter();
+
+    audioLoadingError = false;
     playlistTrack: any;
 
     constructor(private playlistService: AudioPlayerService) {
@@ -49,10 +81,28 @@ export class MatAdvancedAudioPlayerComponent extends BaseAudioPlayerFunctions im
     ngOnInit() {
         this.setDataSourceAttributes();
         this.bindPlayerEvent();
+        this.player.nativeElement.addEventListener('canplay', () => {
+            console.log('audio canplay');
+            this.audioLoadingError = false;
+        });
         this.player.nativeElement.addEventListener('ended', () => {
             if (this.checkIfSongHasStartedSinceAtleastTwoSeconds()) {
                 this.nextSong();
             }
+        });
+        this.player.nativeElement.addEventListener('error', (event) => {
+            console.log('Error while loading audio!');
+            console.log(event);
+            this.audioLoadingError = true;
+            this.playerLoadError.emit(this.playlistTrack);
+        });
+        this.player.nativeElement.addEventListener('loadstart', () => {
+            console.log('audio loadstart');
+            this.audioLoadingError = false;
+        });
+        this.player.nativeElement.addEventListener('waiting', () => {
+            console.log('audio waiting');
+            this.audioLoadingError = false;
         });
         this.playlistService.setPlaylist(this.playlistData);
         this.playlistService.getSubjectCurrentTrack().subscribe((playlistTrack) => {
@@ -119,6 +169,19 @@ export class MatAdvancedAudioPlayerComponent extends BaseAudioPlayerFunctions im
 
     resetSong(): void {
         this.player.nativeElement.src = this.playlistTrack[1].link;
+    }
+
+    retryOrPlay(): void {
+        if (!this.audioLoadingError) {
+            this.playBtnHandler();
+        } else {
+            if (this.playlistTrack.index) {
+                this.selectTrack(this.playlistTrack.index);
+            } else {
+                console.log('No valid playlist track index found, loading first track.');
+                this.selectTrack(0);
+            }
+        }
     }
 
     selectTrack(index: number): void {

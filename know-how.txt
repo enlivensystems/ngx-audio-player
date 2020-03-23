@@ -7,3 +7,13 @@ Publish
 npx ngh --dir=dist/ngx-audio-player-demo/
 
 
+Building and testing the library:
+- npm run-script build-lib
+- cd .\dist\ngx-audio-player\
+- npm pack
+- copy the .tgz file to the project where it needs to be tested
+- Include the local package in the package.json file:
+"ngx-audio-player": "file:ngx-audio-player-9.0.4.tgz"
+- Install without using npm's cache:
+npm i --no-cache
+- Possibly remove the related fields from package-lock.json

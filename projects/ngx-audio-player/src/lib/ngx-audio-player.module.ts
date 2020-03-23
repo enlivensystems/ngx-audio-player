@@ -16,11 +16,12 @@ import { MatAdvancedAudioPlayerComponent } from './component/mat-advanced-audio-
 
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [MatBasicAudioPlayerComponent, SecondsToMinutesPipe, MatAdvancedAudioPlayerComponent],
   imports: [CommonModule, FormsModule, MatButtonModule, MatCardModule, MatTableModule, MatFormFieldModule,
-    MatSliderModule, MatExpansionModule, MatPaginatorModule, MatIconModule],
+    MatSliderModule, MatExpansionModule, MatPaginatorModule, MatIconModule, MatTooltipModule],
   exports: [MatBasicAudioPlayerComponent, MatAdvancedAudioPlayerComponent],
   providers: [AudioPlayerService]
 })

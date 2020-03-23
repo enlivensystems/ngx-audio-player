@@ -149,13 +149,13 @@
           "options": {
             "tsConfig": "projects/ngx-audio-player/tsconfig.lib.json",
             "project": "projects/ngx-audio-player/ng-package.json"
-          }
-        ,          "configurations": {
+          },
+          "configurations": {
             "production": {
               "tsConfig": "projects/ngx-audio-player/tsconfig.lib.prod.json"
             }
           }
-},
+        },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -179,5 +179,8 @@
       }
     }
   },
-  "defaultProject": "ngx-audio-player-demo"
+  "defaultProject": "ngx-audio-player-demo",
+  "cli": {
+    "analytics": "8909535b-8caa-4e90-8415-4c30ecd41970"
+  }
 }

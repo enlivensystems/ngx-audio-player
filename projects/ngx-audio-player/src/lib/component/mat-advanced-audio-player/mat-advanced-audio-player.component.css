@@ -13,9 +13,21 @@ table {
     width: 100%;
 }
 
+table tr td:nth-child(2) {
+    width: 40px;
+}
+
 button:hover,
 button:focus { 
     outline: 0!important;
+}
+
+.clearer {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    line-height: 30px;
+    cursor: pointer;
 }
 
 .ngx-advanced-audio-player {
@@ -47,4 +59,11 @@ mat-icon > .currently-playing {
 
 .skip-next {
     border-right: 2px solid rgba(0,0,0,.1);
+}
+
+.playlist-element-remover {
+    border-radius: 5px;
+    background: white;
+    border: unset;
+    margin-left: 10px;
 }
