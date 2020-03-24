@@ -66,4 +66,5 @@ mat-icon > .currently-playing {
     background: white;
     border: unset;
     margin-left: 10px;
+    cursor: pointer;
 }

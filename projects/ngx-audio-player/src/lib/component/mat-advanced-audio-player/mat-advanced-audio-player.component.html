@@ -1,6 +1,6 @@
 <mat-card class="d-flex justify-content-center ngx-advanced-audio-player z-depth-1 mat-elevation-z2" style="margin: 0px;">
   
-  <audio [src]="playlistTrack[1] ? playlistTrack[1].link : ''" #audioPlayer></audio>
+  <audio [src]="currentTrack ? currentTrack.link : ''" #audioPlayer></audio>
 
   <!-- [disabled]="loaderDisplay" -->
     <button class="p-1" mat-button (click)='previousSong();'>
@@ -71,17 +71,17 @@
 
 <mat-card *ngIf="displayTitle" class="mat-elevation-z1 title-card">
   <div style="text-align: center;">
-    <div *ngIf="playlistTrack && playlistTrack[1]"
+    <div *ngIf="currentTrack"
          style="margin: 1px 2px; padding: 1em">
       <span *ngIf="!isPlaying">
         <span *ngIf="loaderDisplay && !audioLoadingError">{{audioLoadingInProgressText}}</span>
         <span *ngIf="audioLoadingError">{{audioLoadingErrorText}}</span>
-        {{ playlistTrack[1].title }}
+        {{ currentTrack.title }}
       </span>
       <marquee *ngIf="isPlaying" behavior="scroll" direction="left">
         <span *ngIf="loaderDisplay && !audioLoadingError">{{audioLoadingInProgressText}}</span>
         <span *ngIf="audioLoadingError">{{audioLoadingErrorText}}</span>
-        {{ playlistTrack[1].title }}
+        {{ currentTrack.title }}
       </marquee>
     </div>
     <div class="clear"></div>
@@ -108,7 +108,7 @@
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef> </th>
         <td mat-cell *matCellDef="let element">
-          <div *ngIf="playlistTrack && playlistTrack[1] && playlistTrack[1].title === element.title">
+          <div *ngIf="currentTrack && currentTrack.title === element.title">
             <!-- <mat-icon *ngIf="isPlaying" aria-hidden="true">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
             </mat-icon> -->

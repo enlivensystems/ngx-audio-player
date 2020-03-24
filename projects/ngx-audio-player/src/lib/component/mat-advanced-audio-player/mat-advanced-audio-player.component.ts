@@ -1,4 +1,13 @@
-import {Component, OnInit, Input, ViewChild, Output, EventEmitter} from '@angular/core';
+import {
+    Component,
+    OnInit,
+    Input,
+    ViewChild,
+    Output,
+    EventEmitter,
+    OnChanges,
+    SimpleChanges,
+} from '@angular/core';
 import { AudioPlayerService } from '../../service/audio-player-service/audio-player.service';
 import { Track } from '../../model/track.model';
 import { BaseAudioPlayerFunctions } from '../base/base-audio-player-components';
@@ -20,7 +29,7 @@ export class MatAdvancedAudioPlayerComponent extends BaseAudioPlayerFunctions im
 
     paginator: MatPaginator;
 
-    playlistData: Track[];
+    playlistData: Track[] = [];
 
     @Input()
     displayTitle = true;
@@ -73,6 +82,7 @@ export class MatAdvancedAudioPlayerComponent extends BaseAudioPlayerFunctions im
 
     audioLoadingError = false;
     playlistTrack: any;
+    currentTrack: Track;
 
     constructor(private playlistService: AudioPlayerService) {
         super();
@@ -107,6 +117,9 @@ export class MatAdvancedAudioPlayerComponent extends BaseAudioPlayerFunctions im
         this.playlistService.setPlaylist(this.playlistData);
         this.playlistService.getSubjectCurrentTrack().subscribe((playlistTrack) => {
             this.playlistTrack = playlistTrack;
+            if (this.playlistTrack && this.playlistTrack[1]) {
+                this.currentTrack = this.playlistTrack[1];
+            }
         });
         this.player.nativeElement.currentTime = 0;
         this.playlistService.init();
@@ -168,19 +181,15 @@ export class MatAdvancedAudioPlayerComponent extends BaseAudioPlayerFunctions im
     }
 
     resetSong(): void {
-        this.player.nativeElement.src = this.playlistTrack[1].link;
+        this.player.nativeElement.src = this.currentTrack ? this.currentTrack.link : this.playlistTrack[1].link;
     }
 
     retryOrPlay(): void {
         if (!this.audioLoadingError) {
             this.playBtnHandler();
         } else {
-            if (this.playlistTrack.index) {
-                this.selectTrack(this.playlistTrack.index);
-            } else {
-                console.log('No valid playlist track index found, loading first track.');
-                this.selectTrack(0);
-            }
+            console.log('retryOrPlay nextSong()');
+            this.nextSong();
         }
     }
 
@@ -192,13 +201,40 @@ export class MatAdvancedAudioPlayerComponent extends BaseAudioPlayerFunctions im
         }, 0);
     }
 
+    /*
+    Should be called when the playlist changes. Sets GUI elements without resetting the current state.
+     */
+    setPlaylist(playlist: Track[]): void {
+        // If the new playlist is empty, pause
+        if (playlist !== undefined &&
+            playlist.length === 0) {
+            this.player.nativeElement.pause();
+        }
+        // Check if something was removed
+        // If something was and it's the currently playing element, pause go to the next song
+        if (playlist !== undefined &&
+            this.playlistData.length > playlist.length &&
+            this.playlistTrack && this.playlistTrack[1] &&
+            this.playlistData.find(e => e && e.link === this.playlistTrack[1].link) &&
+            !playlist.find(e => e && e.link === this.playlistTrack[1].link)) {
+            console.log('Currently playing element was removed from the playlist, pausing going to the next...');
+            this.player.nativeElement.pause();
+            this.nextSong();
+        }
+        // Set state and GUI in accordance with the playlist changes.
+        this.playlistData = playlist;
+        this.setDataSourceAttributes();
+        this.playlistService.setPlaylist(this.playlistData);
+    }
+
     checkIfSongHasStartedSinceAtleastTwoSeconds(): boolean {
         return this.player.nativeElement.currentTime > 2;
     }
 
     @Input()
     set playlist(playlist: Track[]) {
-        this.playlistData = playlist;
-        this.ngOnInit();
+        this.setPlaylist(playlist);
+        // this.playlistData = playlist;
+        // this.ngOnInit();
     }
 }
