@@ -1,9 +1,9 @@
 {
-  "name": "ngx-audio-player",
+  "name": "@enlivensystems/ngx-audio-player",
   "version": "9.0.4",
   "repository": {
     "type": "git",
-    "url": "https://github.com/vmudigal/ngx-audio-player.git"
+    "url": "https://github.com/enlivensystems/ngx-audio-player"
   },
   "author": {
     "name": "Vijayendra Mudigal",
