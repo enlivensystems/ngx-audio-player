@@ -83,6 +83,20 @@
         <span *ngIf="audioLoadingError">{{audioLoadingErrorText}}</span>
         {{ currentTrack.title }}
       </marquee>
+      <!--
+      Would be nice, see: https://github.com/shivarajnaidu/ng-marquee/issues/10
+      <ng-marquee *ngIf="isPlaying"
+                  behavior="scroll"
+                  direction="left"
+                  speed="normal"
+                  [stopOnHover]="true">
+        <mark>
+          <span *ngIf="loaderDisplay && !audioLoadingError">{{audioLoadingInProgressText}}</span>
+          <span *ngIf="audioLoadingError">{{audioLoadingErrorText}}</span>
+          {{ currentTrack.title }}
+        </mark>
+      </ng-marquee>
+      -->
     </div>
     <div class="clear"></div>
   </div>

@@ -4,9 +4,7 @@ import {
     Input,
     ViewChild,
     Output,
-    EventEmitter,
-    OnChanges,
-    SimpleChanges,
+    EventEmitter
 } from '@angular/core';
 import { AudioPlayerService } from '../../service/audio-player-service/audio-player.service';
 import { Track } from '../../model/track.model';
@@ -92,7 +90,6 @@ export class MatAdvancedAudioPlayerComponent extends BaseAudioPlayerFunctions im
         this.setDataSourceAttributes();
         this.bindPlayerEvent();
         this.player.nativeElement.addEventListener('canplay', () => {
-            console.log('audio canplay');
             this.audioLoadingError = false;
         });
         this.player.nativeElement.addEventListener('ended', () => {
@@ -101,17 +98,15 @@ export class MatAdvancedAudioPlayerComponent extends BaseAudioPlayerFunctions im
             }
         });
         this.player.nativeElement.addEventListener('error', (event) => {
-            console.log('Error while loading audio!');
+            console.log('Error while loading audio:');
             console.log(event);
             this.audioLoadingError = true;
             this.playerLoadError.emit(this.playlistTrack);
         });
         this.player.nativeElement.addEventListener('loadstart', () => {
-            console.log('audio loadstart');
             this.audioLoadingError = false;
         });
         this.player.nativeElement.addEventListener('waiting', () => {
-            console.log('audio waiting');
             this.audioLoadingError = false;
         });
         this.playlistService.setPlaylist(this.playlistData);
@@ -188,13 +183,16 @@ export class MatAdvancedAudioPlayerComponent extends BaseAudioPlayerFunctions im
         if (!this.audioLoadingError) {
             this.playBtnHandler();
         } else {
-            console.log('retryOrPlay nextSong()');
             this.nextSong();
+            // @note These do not work for retrying the current song!
+            // this.previousSong();
+            // this.currentTime = 0;
+            // this.duration = 0.01;
+            // this.play();
         }
     }
 
     selectTrack(index: number): void {
-        console.log('selectTrack(index: number): void: ' + index);
         this.playlistService.selectATrack(index);
         setTimeout(() => {
             this.player.nativeElement.play();

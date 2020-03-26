@@ -17,12 +17,10 @@ export class AudioPlayerService {
   }
 
   init(): void {
-    console.log('audio player service init');
     this.updateCurrentSong();
   }
 
   nextSong(): void {
-    console.log('nextSong');
     if ((this.indexSong + 1) >= this.playlist.length) {
       this.indexSong = 0;
     } else {
@@ -32,7 +30,6 @@ export class AudioPlayerService {
   }
 
   previousSong(): void {
-    console.log('previousSong');
     if ((this.indexSong - 1) < 0) {
       this.indexSong = (this.playlist.length - 1);
     } else {
@@ -52,7 +49,6 @@ export class AudioPlayerService {
   }
 
   updateCurrentSong(): void {
-    console.log('updateCurrentSong');
     const current = this.playlist[this.indexSong];
     const previous = ((this.indexSong - 1) >= 0) ? this.playlist[this.indexSong - 1] : this.playlist[this.playlist.length - 1];
     const next = ((this.indexSong + 1) >= this.playlist.length) ? this.playlist[0] : this.playlist[this.indexSong + 1];
