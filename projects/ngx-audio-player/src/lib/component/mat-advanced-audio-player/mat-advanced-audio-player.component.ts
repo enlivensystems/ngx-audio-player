@@ -29,6 +29,8 @@ export class MatAdvancedAudioPlayerComponent extends BaseAudioPlayerFunctions im
 
     playlistData: Track[] = [];
 
+    Infinity = Infinity;
+
     @Input()
     displayTitle = true;
 

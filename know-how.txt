@@ -17,3 +17,10 @@ Building and testing the library:
 - Install without using npm's cache:
 npm i --no-cache
 - Possibly remove the related fields from package-lock.json
+
+Publishing the library for the first time:
+- npm publish --access public
+
+Publishing new version of the library:
+- Increase the version number in project/ngx-audio-player/package.json
+- npm publish
