@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { BaseAudioPlayerFunctions } from '../base/base-audio-player-components';
+import {DeviceDetectorService} from 'ngx-device-detector';
 
 @Component({
     selector: 'mat-basic-audio-player',
@@ -23,8 +24,8 @@ export class MatBasicAudioPlayerComponent extends BaseAudioPlayerFunctions imple
     @Input()
     displayVolumeControls = true;
 
-    constructor() {
-        super();
+    constructor(deviceService: DeviceDetectorService) {
+        super(deviceService);
     }
 
     ngOnInit() {

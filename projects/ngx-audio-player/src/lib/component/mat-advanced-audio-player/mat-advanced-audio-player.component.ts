@@ -12,6 +12,7 @@ import { BaseAudioPlayerFunctions } from '../base/base-audio-player-components';
 import { MatSlider } from '@angular/material/slider';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import {DeviceDetectorService} from 'ngx-device-detector';
 
 @Component({
     selector: 'mat-advanced-audio-player',
@@ -84,8 +85,9 @@ export class MatAdvancedAudioPlayerComponent extends BaseAudioPlayerFunctions im
     playlistTrack: any;
     currentTrack: Track;
 
-    constructor(private playlistService: AudioPlayerService) {
-        super();
+    constructor(deviceService: DeviceDetectorService,
+                private playlistService: AudioPlayerService) {
+        super(deviceService);
     }
 
     ngOnInit() {

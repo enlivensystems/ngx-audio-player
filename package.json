@@ -88,6 +88,7 @@
     "karma-jasmine-html-reporter": "^1.5.2",
     "karma-teamcity-reporter": "^1.1.0",
     "ng-packagr": "^9.0.0",
+    "ngx-device-detector": "^1.4.1",
     "protractor": "~5.4.3",
     "ts-node": "~8.6.2",
     "tslint": "^5.0.0",

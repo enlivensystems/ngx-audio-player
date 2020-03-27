@@ -1,6 +1,6 @@
 {
   "name": "@enlivensystems/ngx-audio-player",
-  "version": "9.0.400",
+  "version": "9.0.401",
   "repository": {
     "type": "git",
     "url": "https://github.com/enlivensystems/ngx-audio-player"
@@ -31,6 +31,7 @@
   "peerDependencies": {
     "@angular/common": "^9.0.0",
     "@angular/core": "^9.0.0",
-    "@angular/material": "^9.0.0"
+    "@angular/material": "^9.0.0",
+    "ngx-device-detector": "^1.4.1"
   }
 }

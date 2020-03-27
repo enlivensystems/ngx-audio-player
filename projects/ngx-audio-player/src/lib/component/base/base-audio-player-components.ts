@@ -1,7 +1,10 @@
 import { ViewChild, ElementRef } from '@angular/core';
 import { MatSlider } from '@angular/material/slider';
+import {DeviceDetectorService} from 'ngx-device-detector';
 
 export class BaseAudioPlayerFunctions {
+
+    constructor(public deviceService: DeviceDetectorService) {}
 
     @ViewChild('audioPlayer', {static: true}) player: ElementRef;
     timeLineDuration: MatSlider;
@@ -33,10 +36,19 @@ export class BaseAudioPlayerFunctions {
         this.player.nativeElement.addEventListener('loadstart', () => {
             this.loaderDisplay = true;
         });
-        this.player.nativeElement.addEventListener('loadeddata', () => {
-            this.loaderDisplay = false;
-            this.duration = Math.floor(this.player.nativeElement.duration);
-        });
+        if (this.deviceService.browser !== 'Safari') {
+            this.player.nativeElement.addEventListener('loadeddata', () => {
+                this.loaderDisplay = false;
+                this.duration = Math.floor(this.player.nativeElement.duration);
+            });
+        } else {
+            // loadeddata doesn't really work on iOS safari
+            // progress however doesn't work on Edge
+            this.player.nativeElement.addEventListener('progress', (event) => {
+                this.loaderDisplay = false;
+                this.duration = Math.floor(this.player.nativeElement.duration);
+            });
+        }
     }
 
     playBtnHandler(): void {
