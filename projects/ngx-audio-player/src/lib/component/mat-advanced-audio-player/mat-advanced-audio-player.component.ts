@@ -155,8 +155,12 @@ export class MatAdvancedAudioPlayerComponent extends BaseAudioPlayerFunctions im
         }
         this.currentTime = 0;
         this.duration = 0.01;
+        const shouldPlay = this.playlistService.indexSong + 1 < this.playlistService.playlist.length;
         this.playlistService.nextSong();
-        this.play();
+        // Stop, if we reached the end of the playlist
+        if (shouldPlay) {
+            this.play();
+        }
     }
 
     previousSong(): void {

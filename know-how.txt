@@ -13,7 +13,8 @@ Building and testing the library:
 - npm pack
 - copy the .tgz file to the project where it needs to be tested
 - Include the local package in the package.json file:
-"ngx-audio-player": "file:ngx-audio-player-9.0.4.tgz"
+"ngx-audio-player": "file:enlivensystems-ngx-audio-player-9.0.401.tgz"
+If the version did not change, the package should be uninstalled first.
 - Install without using npm's cache:
 npm i --no-cache
 - Possibly remove the related fields from package-lock.json
