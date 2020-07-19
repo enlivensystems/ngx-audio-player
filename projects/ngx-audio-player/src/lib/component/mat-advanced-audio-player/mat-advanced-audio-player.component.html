@@ -1,9 +1,9 @@
 <mat-card class="d-flex justify-content-center ngx-advanced-audio-player z-depth-1 mat-elevation-z2" style="margin: 0px;">
-  
+
   <audio [src]="currentTrack ? currentTrack.link : ''" #audioPlayer></audio>
 
   <!-- [disabled]="loaderDisplay" -->
-    <button class="p-1" mat-button (click)='previousSong();'>
+    <button class="p-1 skip-prev" mat-button (click)='previousSong();'>
       <mat-icon aria-hidden="true">
         <!-- Skip previous icon (skip_previous) -->
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/><path d="M0 0h32v32H0z" fill="none"/></svg>

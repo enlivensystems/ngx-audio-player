@@ -23,5 +23,7 @@ Publishing the library for the first time:
 - npm publish --access public
 
 Publishing new version of the library:
+- cd .\dist\ngx-audio-player\
 - Increase the version number in project/ngx-audio-player/package.json
+- ("npm login" might be needed first)
 - npm publish
