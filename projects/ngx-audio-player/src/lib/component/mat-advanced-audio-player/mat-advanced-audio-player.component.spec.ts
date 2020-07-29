@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import 'hammerjs';
 import { MatAdvancedAudioPlayerComponent } from './mat-advanced-audio-player.component';
 
 import { MatExpansionModule } from '@angular/material/expansion';

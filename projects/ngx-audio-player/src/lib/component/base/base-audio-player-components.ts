@@ -1,7 +1,8 @@
-import { ViewChild, ElementRef } from '@angular/core';
+import { ViewChild, ElementRef, Directive } from '@angular/core';
 import { MatSlider } from '@angular/material/slider';
 import {DeviceDetectorService} from 'ngx-device-detector';
 
+@Directive()
 export class BaseAudioPlayerFunctions {
 
     constructor(public deviceService: DeviceDetectorService) {}
