@@ -98,6 +98,7 @@ export class MatAdvancedAudioPlayerComponent extends BaseAudioPlayerFunctions im
         });
         this.player.nativeElement.addEventListener('ended', () => {
             if (this.checkIfSongHasStartedSinceAtleastTwoSeconds()) {
+                this.removePlaylistElementByID.emit(this.currentTrack.id);
                 this.nextSong();
             }
         });
